@@ -31,7 +31,7 @@ class PhoneRepairsSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class PhoneReviewsSerializer(serializers.ModelSerializer):
-    phone = PhoneSerializer(source='phone_viewset')
+    phone_obj = PhoneSerializer(source='phone_viewset', read_only=True)
     class Meta:
         model = PhoneReviews
         fields = '__all__'
