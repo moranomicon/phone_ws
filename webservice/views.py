@@ -96,8 +96,8 @@ class PhoneRequestViewSet(viewsets.ModelViewSet):
 
 
 class UserViewSet(viewsets.ViewSet):
-    permission_classes_by_action = {'create': [AllowAny],
-                                    'list': [IsAdminUser]}
+    permission_classes = []
+    authentication_classes = []
                                     
     @action(detail=False,  methods=['post'])
     def register(self, request, pk=None):
