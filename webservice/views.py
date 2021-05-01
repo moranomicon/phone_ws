@@ -1,6 +1,6 @@
 import json
 from django.core import serializers
-from django.http.response import HttpResponse, JsonResponse
+from django.http.response import JsonResponse
 from webservice.models import Customer, Phone, PhoneDetails, PhoneRepairs, PhoneRequest, PhoneReviews, PhoneTransactions
 from webservice.serializers import CustomerSerializer, PhoneDetailsSerializer, PhoneRepairsSerializer, PhoneRequestSerializer, PhoneReviewsSerializer, PhoneSerializer, PhoneTransactionsSerializer, UserSerializer
 from rest_framework import viewsets
@@ -9,6 +9,7 @@ from crum import get_current_user
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from django.contrib.auth.models import User
+from rest_framework.permissions import AllowAny, IsAdminUser
 
 # Create your views here.
 
@@ -95,6 +96,9 @@ class PhoneRequestViewSet(viewsets.ModelViewSet):
 
 
 class UserViewSet(viewsets.ViewSet):
+    permission_classes_by_action = {'create': [AllowAny],
+                                    'list': [IsAdminUser]}
+                                    
     @action(detail=False,  methods=['post'])
     def register(self, request, pk=None):
         try:

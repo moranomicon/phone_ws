@@ -24,7 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = '=q%kc)=w)98t-syn1s72@%ddm+=z&so-m#iw(6k*1&t7dn!@*v'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 CORS_ALLOW_ALL_ORIGINS = True
 ALLOWED_HOSTS = ["*"]
 
@@ -39,7 +39,7 @@ REST_FRAMEWORK = {
 }
 
 JWT_AUTH = {
-    'JWT_EXPIRATION_DELTA': datetime.timedelta(hours=12),
+    'JWT_EXPIRATION_DELTA': datetime.timedelta(days=30),
     'JWT_ALLOW_REFRESH': False,
     'JWT_REFRESH_EXPIRATION_DELTA': datetime.timedelta(days=7),
 }
