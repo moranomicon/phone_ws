@@ -8,8 +8,11 @@ from django_filters.rest_framework import DjangoFilterBackend
 from crum import get_current_user
 from rest_framework.decorators import action
 from rest_framework.response import Response
-from django.contrib.auth.models import User
-from rest_framework.permissions import AllowAny, IsAdminUser
+from django.contrib.auth.models import User, UserManager
+from rest_framework.viewsets import GenericViewSet
+from rest_framework.mixins import CreateModelMixin
+from django.contrib.auth import get_user_model
+from .serializers import UserSerializer
 
 # Create your views here.
 
@@ -95,25 +98,33 @@ class PhoneRequestViewSet(viewsets.ModelViewSet):
         return JsonResponse(json.loads(serialized_qs), safe=False)
 
 
-class UserViewSet(viewsets.ViewSet):
+# class UserViewSet(viewsets.ViewSet):
+#     permission_classes = []
+#     authentication_classes = []
+                                    
+#     @action(detail=False,  methods=['post'])
+#     def register(self, request, pk=None):
+#         try:
+#             serializer = UserSerializer(data=request.data)
+#             if not serializer.is_valid():
+#                 return serializer.errors
+#             User.objects.create
+#             user = User()
+#             user.username=serializer.validated_data.get('username')
+#             user.set_password(serializer.validated_data.get('password'))
+#             user.first_name=serializer.validated_data.get(
+#                 'first_name'), 
+#             user.last_name=serializer.validated_data.get('last_name'), 
+#             user.email=serializer.validated_data.get('email')
+#             user.save()
+
+#             return Response("User Created!")
+#         except Exception as ex:
+#             return Response(str(ex))
+
+class CreateUserView(CreateModelMixin, GenericViewSet):
     permission_classes = []
     authentication_classes = []
-                                    
-    @action(detail=False,  methods=['post'])
-    def register(self, request, pk=None):
-        try:
-            serializer = UserSerializer(data=request.data)
-            if not serializer.is_valid():
-                return serializer.errors
-            user = User()
-            user.username=serializer.validated_data.get('username')
-            user.set_password(serializer.validated_data.get('password'))
-            user.first_name=serializer.validated_data.get(
-                'first_name'), 
-            user.last_name=serializer.validated_data.get('last_name'), 
-            user.email=serializer.validated_data.get('email')
-            user.save()
-
-            return Response("User Created!")
-        except Exception as ex:
-            return Response(str(ex))
+    
+    queryset = get_user_model().objects.all()
+    serializer_class = UserSerializer

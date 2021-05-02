@@ -14,7 +14,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.db.models import base
-from webservice.views import CustomerViewSet, PhoneDetailsViewSet, PhoneRepairsViewSet, PhoneRequestViewSet, PhoneReviewsViewSet, PhoneTransactionsViewSet, PhoneViewSet, ProfileViewSet, UserViewSet
+from webservice.views import CreateUserView, CustomerViewSet, PhoneDetailsViewSet, PhoneRepairsViewSet, PhoneRequestViewSet, PhoneReviewsViewSet, PhoneTransactionsViewSet, PhoneViewSet, ProfileViewSet
 from django.contrib import admin
 from django.urls import path, include
 from django.conf.urls import url
@@ -30,7 +30,7 @@ router.register(r'phone-repairs', PhoneRepairsViewSet)
 router.register(r'phone-reviews', PhoneReviewsViewSet)
 router.register(r'phone-request', PhoneRequestViewSet)
 router.register(r'profile', ProfileViewSet)
-router.register(r'user', UserViewSet, basename='user')
+router.register(r'register', CreateUserView, basename='register')
 
 
 
